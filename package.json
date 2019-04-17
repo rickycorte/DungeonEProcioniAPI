@@ -1,0 +1,27 @@
+{
+  "name": "dungeon_e_procioni_api",
+  "version": "0.0.1",
+  "description": "Dungeon e Procioni API",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rickycorte/DungeonEProcioniAPI.git"
+  },
+  "author": "RickyCorte",
+  "license": "Private",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^7.0.0",
+    "express": "^4.16.4",
+    "jsonwebtoken": "^8.5.1",
+    "module-alias": "^2.2.0",
+    "mongoose": "^5.5.2"
+  },
+  "_moduleAliases": {
+    "@root": ".",
+    "@models": "models"
+  }
+}
