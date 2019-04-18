@@ -2,7 +2,7 @@
 
 const express = require('express');
 const checkMw = require("@api/auth/tokenCheckMiddleware");
-
+const { check, validationResult } = require('express-validator/check');
 
 const Character = require("@models/characterModel");
 
@@ -13,7 +13,7 @@ const router = express.Router();
 /* ======================================================================================== */
 // ROUTES
 
-router.post("/create", checkMw, (req, res) => {
+router.post("/create", checkMw, [check("name").isLength({ min: 2 }).trim().escape()], (req, res) => {
 
     try
     {

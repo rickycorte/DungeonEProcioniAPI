@@ -1,9 +1,9 @@
 'use strict';
 
 const express = require('express');
-const mongoose = require("mongoose");
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const { check, validationResult } = require('express-validator/check');
 
 const router = express.Router();
 
@@ -32,8 +32,17 @@ function makeJWTToken(userID) {
 /**
  * Register a new User
  */
-router.post('/register', function (req, res) {
+router.post('/register', [
+    check("name").isLength({ min: 5 }).trim().escape(),
+    check("email").isEmail().normalizeEmail(),
+    check("password").isLength({ min: 8 }).trim()
+    ], function (req, res) {
 
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.array() });
+    }
     //TODO:sistemare per la production, ora la tengo solo in debug
 
     if (process.env.NODE_ENV === "production") {
@@ -87,10 +96,10 @@ router.post('/register', function (req, res) {
  */
 router.get('/check', checkMw, function (req, res) {
 
-        res.status(200).send({
-            result: "ok",
-            message: "Authenticated"
-        });
+    res.status(200).send({
+        result: "ok",
+        message: "Authenticated"
+    });
 });
 
 
@@ -100,15 +109,15 @@ router.get('/check', checkMw, function (req, res) {
 router.get('/profile', checkMw, function (req, res) {
 
 
-    User.findById(req.userId, { password: 0, __v: 0 }, 
+    User.findById(req.userId, { password: 0, __v: 0 },
         (err, user) => {
-        if (err) {
-            return res.status(500).send({status: "error", message:"There was a problem finding the user."});
-        }
-        if (!user) return res.status(404).send({status:"error", message: "No user found."});
-    
-        res.status(200).send(user);
-    });
+            if (err) {
+                return res.status(500).send({ status: "error", message: "There was a problem finding the user." });
+            }
+            if (!user) return res.status(404).send({ status: "error", message: "No user found." });
+
+            res.status(200).send(user);
+        });
 
 });
 
@@ -116,7 +125,14 @@ router.get('/profile', checkMw, function (req, res) {
 /**
  * Log the user in
  */
-router.post('/login', function (req, res) {
+router.post('/login', [
+    check("email").isEmail().normalizeEmail()
+    ], function (req, res) {
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.array() });
+    }
 
     try {
 
