@@ -46,9 +46,9 @@ router.post('/register', function (req, res) {
     //TODO: controllare che non esista gia un utente con quella mail
 
     try {
-        var hashedPassword = bcrypt.hashSync(req.body.password, 8);
+        let hashedPassword = bcrypt.hashSync(req.body.password, 8);
 
-        var usr = new User({
+        let usr = new User({
             name: req.body.name,
             email: req.body.email,
             password: hashedPassword
@@ -62,9 +62,9 @@ router.post('/register', function (req, res) {
                 });
 
             // create a token
-            var token = makeJWTToken(user._id);
+            let token = makeJWTToken(user._id);
 
-            console.log("Registered a new user!");
+            //console.log("Registered a new user!");
             res.status(200).send({
                 result: "ok",
                 token: token
@@ -139,7 +139,7 @@ router.post('/login', function (req, res) {
                     });
                 }
 
-                var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
+                let passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
                 if (!passwordIsValid) {
                     return res.status(404).send({
                         status: "error",
@@ -148,7 +148,7 @@ router.post('/login', function (req, res) {
                     });
                 }
 
-                var token = makeJWTToken(user._id);
+                let token = makeJWTToken(user._id);
 
                 res.status(200).send({ status: "ok", auth: true, token: token });
             });

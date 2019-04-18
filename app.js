@@ -24,6 +24,7 @@ app.use(express.json())
 // ROUTES
 
 app.use("/auth", require("@api/auth/auth"))
+app.use("/characters", require("@api/characters/characters"))
 
 /* ======================================================================================== */
 // ERRORS
