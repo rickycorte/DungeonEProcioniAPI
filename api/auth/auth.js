@@ -7,9 +7,9 @@ const bcrypt = require('bcryptjs');
 
 const router = express.Router();
 
-const User = require("@models/user.js");
+const User = require("@models/userModel");
 
-const checkMw = require("./tokenCheckMiddleware.js");
+const checkMw = require("./tokenCheckMiddleware");
 
 
 /**

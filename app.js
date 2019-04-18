@@ -14,7 +14,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 //init db
-require("./database/database.js")
+require("@api/database/database")
 
 //TODO: check env vars
 
@@ -23,7 +23,7 @@ app.use(express.json())
 /* ======================================================================================== */
 // ROUTES
 
-app.use("/auth", require("./auth/auth"))
+app.use("/auth", require("@api/auth/auth"))
 
 /* ======================================================================================== */
 // ERRORS
