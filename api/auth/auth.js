@@ -41,7 +41,7 @@ router.post('/register', [
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(422).json({ errors: errors.array() });
+        return res.status(422).json({ status: "error", errors: errors.array() });
     }
 
     //TODO: controllare che non esista gia un utente con quella mail
@@ -59,7 +59,7 @@ router.post('/register', [
             if (err)
                 return res.status(500).send({
                     result: "error",
-                    message: "Oh no! A raccoon broke our database!"
+                    message: "Unable to connect to database"
                 });
 
             // create a token
@@ -123,7 +123,7 @@ router.post('/login', [
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(422).json({ errors: errors.array() });
+        return res.status(422).json({ status: "error", errors: errors.array() });
     }
 
     try {
@@ -136,14 +136,14 @@ router.post('/login', [
                     return res.status(500).send({
                         status: "error",
                         auth: false,
-                        message: "A raccoon broke our database, please retray later!"
+                        message: "Unable to connect to database"
                     });
 
                 if (!user) {
                     return res.status(404).send({
                         status: "error",
                         auth: false,
-                        message: "Our raccoouns can't find your account, sorry."
+                        message: "We couldn't find your account."
                     });
                 }
 

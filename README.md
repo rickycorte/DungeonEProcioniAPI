@@ -129,6 +129,27 @@ Parameter | Required | Type | Description
 :---: | :---: | :---: | :---: 
 character_name | Y | string  | character name to use
 
+### Update
+Update a existing and owned character. This function will merge old data json with the new one
+
+Note: you have to implement your own validation function in `characters/validator.js`.
+
+You must not change name and/or parameters of the existing function, just add your own validation login.
+If you detect an invalid json data use `return null;` to inform the request handler that the data is not valid and should skip the update.
+When you have finished to sanitize the data, send it back as a json object with `return sanitized_json_object;`.
+
+Request:
+
+Type | Path | Auth
+:---: | :---: | :---:
+POST | example.com/characters/update | Y
+
+Parameters:
+
+Parameter | Required | Type | Description
+:---: | :---: | :---: | :---: 
+character_name | Y | string  | character name to use
+
 ### Delete
 Delete a owned character. This function prevent deleting characters you don't own
 
