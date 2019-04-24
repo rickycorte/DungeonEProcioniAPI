@@ -14,7 +14,7 @@ Now that you installed everything you have to set 4 environment variables
 
 Name | Description
 --- | ---
-MONGO_URL | MongoDB uri: mongodb+srv://<user>:<psw>@<host>/DungeonEProcioni
+MONGO_URL | MongoDB uri: mongodb+srv://user:psw@host/DungeonEProcioni
 JWT_SECRET | Secret token to encrypt JWT tokens
 JWT_TOKEN_LIFETIME_SECONDS | JWT token lifetime in seconds; `86400 = 24h`
 NODE_ENV | Set this var to "production" only on the production machines
@@ -23,9 +23,9 @@ Leave `NODE_ENV` empty to load debug env vars stored in `.env` file.
 
 
 ## Auth
-We handle auth with jwt tokens issued by the server! Both register and login methods return jwt token for the user if the operation succeded!
+We handle auth with JWT tokens issued by the server! Both register and login methods return JWT token for the user if the operation succeded!
 
-To send the jwt token you have to send it on every request that requires auth as a http header:
+To send the JWT token you have to send it on every request that requires auth as a http header:
 
 ```
 x-access-token: your-jtw-token  
@@ -84,7 +84,7 @@ password | Y | string | User password (wil be encrypted)
 On success this functions return the JWT token for the user! See character methods to see how to use JWT token. For the moment just store it somewhere.
 
 ### Check
-Checks if the jwt token is valid (used for test purposes)
+Checks if the JWT token is valid (used for test purposes)
 
 Request:
 
@@ -96,7 +96,7 @@ Parameters:
 
 No
 
-Returns ok if jwt token is valid
+Returns ok if JWT token is valid
 
 ### Profile
 Return user profile data (name, email, ... there is no more xP)
@@ -148,7 +148,8 @@ Parameters:
 
 Parameter | Required | Type | Description
 :---: | :---: | :---: | :---: 
-character_name | Y | string  | character name to use
+character_id | Y | string  | character id to update
+data | Y | json object | Character data to update
 
 ### Delete
 Delete a owned character. This function prevent deleting characters you don't own
