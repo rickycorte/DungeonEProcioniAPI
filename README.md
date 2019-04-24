@@ -143,3 +143,17 @@ Parameters:
 Parameter | Required | Type | Description
 :---: | :---: | :---: | :---: 
 character_id | Y | string  | character id to delete
+
+
+### List All
+Retrive owned characters from the database. This functions returns an array (`data`) with the list of owned characters
+
+Request:
+
+Type | Path | Auth
+:---: | :---: | :---:
+GET | example.com/characters/listapp | Y
+
+Parameters:
+
+No
