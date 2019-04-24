@@ -43,14 +43,6 @@ router.post('/register', [
     if (!errors.isEmpty()) {
         return res.status(422).json({ errors: errors.array() });
     }
-    //TODO:sistemare per la production, ora la tengo solo in debug
-
-    if (process.env.NODE_ENV === "production") {
-        res.status(500).send({
-            result: "error",
-            token: "Our raccoon engineers are working hard to let you join the beta as soon as possibile!"
-        });
-    }
 
     //TODO: controllare che non esista gia un utente con quella mail
 

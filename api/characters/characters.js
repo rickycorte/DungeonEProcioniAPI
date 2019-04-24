@@ -74,4 +74,32 @@ router.post("/delete", checkMw, [check("character_id").isLength({min: 2}).trim()
 });
 
 
+router.get("/listall", checkMw, (req, res)=>
+{
+    console.log("Retriving charater for: "+ req.userId);
+    try
+    {
+        Character.find({ownerid: req.userId}, {ownerid: 0, __v: 0}, 
+            (err, chars) => {
+            if (err) {
+                return res.status(500).send({ status: "error", message: "There was a problem finding the user characters." });
+            }
+            let result = {result: "ok", data: []};
+
+            chars.forEach(el => {
+                result.data.push(el);
+            });
+
+            res.status(200).send(result);
+        });
+    }
+    catch (err) {
+        return res.status(400).send({
+            result: "error",
+            message: "Please check your request data!"
+        });
+    }
+
+});
+
 module.exports = router;
