@@ -152,7 +152,7 @@ Request:
 
 Type | Path | Auth
 :---: | :---: | :---:
-GET | example.com/characters/listapp | Y
+GET | example.com/characters/listall | Y
 
 Parameters:
 
