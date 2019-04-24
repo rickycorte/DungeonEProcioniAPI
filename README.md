@@ -45,7 +45,6 @@ Every responce has a basic json format:
 
 If `result` is set to `error`, a `message` field is set with a error string.
 
-## Auth
 
 ### Register
 Register a new user
@@ -115,4 +114,32 @@ No
 
 ## Characters
 
-###
+### Create
+Create a new character
+
+Request:
+
+Type | Path | Auth
+:---: | :---: | :---:
+POST | example.com/characters/create | Y
+
+Parameters:
+
+Parameter | Required | Type | Description
+:---: | :---: | :---: | :---: 
+character_name | Y | string  | character name to use
+
+### Delete
+Delete a owned character. This function prevent deleting characters you don't own
+
+Request:
+
+Type | Path | Auth
+:---: | :---: | :---:
+POST | example.com/characters/delete | Y
+
+Parameters:
+
+Parameter | Required | Type | Description
+:---: | :---: | :---: | :---: 
+character_id | Y | string  | character id to delete
