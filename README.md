@@ -83,6 +83,23 @@ password | Y | string | User password (wil be encrypted)
 
 On success this functions return the JWT token for the user! See character methods to see how to use JWT token. For the moment just store it somewhere.
 
+### Change Password
+Change user password
+
+Request:
+
+Type | Path | Auth
+:---: | :---: | :---:
+POST | example.com/auth/changepassword | Y
+
+Parameters:
+
+Parameter | Required | Type | Description
+:---: | :---: | :---: | :---: 
+email | Y | string  | User Email
+password | Y | string | User password (wil be encrypted)
+
+
 ### Check
 Checks if the JWT token is valid (used for test purposes)
 
