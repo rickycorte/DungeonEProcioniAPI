@@ -46,12 +46,15 @@ router.post('/register', [
 
 
     try {
-        var justRegisterd = false;
-
         //check if just registered
         User.findOne({ email: req.body.email }, (err, user) => {
             if (err)
-                justRegisterd = false;
+                return res.status(500).send({
+                    status: "error",
+                    auth: false,
+                    message: "Unable to connect to database"
+                });
+
 
             //found a registered user with the same email
             if (user) {
@@ -61,8 +64,7 @@ router.post('/register', [
                     message: "That email is just registered with another account"
                 });
             }
-            else
-            {    
+            else {
                 let hashedPassword = bcrypt.hashSync(req.body.password, 8);
 
                 let usr = new User({
@@ -70,29 +72,81 @@ router.post('/register', [
                     email: req.body.email,
                     password: hashedPassword
                 });
-        
+
                 usr.save((err, user) => {
                     if (err)
                         return res.status(500).send({
                             result: "error",
                             message: "Unable to connect to database"
                         });
-        
+
                     // create a token
                     let token = makeJWTToken(user._id);
-        
+
                     //console.log("Registered a new user!");
                     res.status(200).send({
                         result: "ok",
                         token: token
                     });
-        
+
                 });
             }
-            
+
         });
-    
- 
+
+
+    }
+    catch (err) {
+        return res.status(400).send({
+            result: "error",
+            message: "Please check your request data!"
+        });
+    }
+
+});
+
+
+router.post('/changepassword', checkMw, [
+    check("email").isEmail().normalizeEmail(),
+    check("password").isLength({ min: 8 }).trim()
+], function (req, res) {
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(422).json({ status: "error", errors: errors.array() });
+    }
+
+    try {
+        //check if just registered
+        User.updateOne({ email: req.body.email, _id: req.userId }, { password: bcrypt.hashSync(req.body.password, 8) }, (err, result) => {
+            if (err)
+                return res.status(500).send({
+                    status: "error",
+                    auth: false,
+                    message: "Unable to connect to database"
+                });
+
+            //found a registered user with the same email
+            if (result) {
+                res.status(200).send({
+                    result: "ok",
+                    message: "Updated password"
+                });
+
+            }
+            else {
+                return res.status(404).send({
+                    status: "error",
+                    auth: false,
+                    message: "Unable to update password"
+                });
+
+
+            }
+
+        });
+
+
     }
     catch (err) {
         return res.status(400).send({
